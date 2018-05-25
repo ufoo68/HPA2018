@@ -10,12 +10,12 @@
 e : エレベータ  
 r : ラダー  
 ### LANケーブル left
-緑白 : e up  
-緑 : e neutral  
-橙白 : e down  
-青 : r left  
-青白 : r neutral  
-橙 : r right  
+緑白 : r left  
+緑 : r neutral  
+橙白 : r right  
+青 : e down  
+青白 : e neutral  
+橙 : e up  
 茶白 : none  
 茶 : GND  
 
