@@ -1,18 +1,18 @@
 /*
-ラダー、エレベータ制御プログラム 2015
-最終修正日 2015 5/25
+ラダー、エレベータ制御プログラム 2018
+最終修正日 2018 5/25
 */
 
 #include <Servo.h>
 
 //ラダーキーピン宣言
-#define rpn_up 17
-#define rpn_rst 18
-#define rpn_dn 19
+#define rpn_left 6
+#define rpn_rst 7
+#define rpn_right 8
 //エレベータキーピン宣言
-#define epn_up 6
-#define epn_rst 7
-#define epn_dn 8
+#define epn_up 19
+#define epn_rst 18
+#define epn_dn 17
 //サーボピン宣言
 #define rpn_srv 9
 #define epn_srv 10
@@ -59,7 +59,7 @@ char r_trm_cnt = 0;            //トリム段数
 short r_angle;                 //サーボ出力角度
 short bfr_angle;               //
 short afr_angle;               //
-boolean r_up, r_rst, r_dn;     //キー入力状態
+boolean r_left, r_rst, r_right;     //キー入力状態
 boolean rk_up, rk_rst, rk_dn;  //キー入力フラグ
 short r_value;                 //アナログ読み取り値
 short bfr_value[d_avg];               //アナログ読み取り値 before
@@ -91,9 +91,9 @@ short reverse(short angle) {
 void setup() {
   
 //ピン設定と入力プルアップ
-  pinMode(rpn_up, INPUT_PULLUP);
+  pinMode(rpn_left, INPUT_PULLUP);
   pinMode(rpn_rst, INPUT_PULLUP);
-  pinMode(rpn_dn, INPUT_PULLUP);
+  pinMode(rpn_right, INPUT_PULLUP);
   pinMode(epn_up, INPUT_PULLUP);
   pinMode(epn_rst, INPUT_PULLUP);
   pinMode(epn_dn, INPUT_PULLUP);
@@ -122,9 +122,9 @@ void loop() {
   
 //ラダーアングル処理
   //入力受付
-  r_up = digitalRead(rpn_up);
+  r_left = digitalRead(rpn_left);
   r_rst = digitalRead(rpn_rst);
-  r_dn = digitalRead(rpn_dn);
+  r_right = digitalRead(rpn_right);
   
   //移動平均によるA/D変換地の読み取り
   bfr_value[d_avg-1] = analogRead(rpn_ang);
@@ -189,25 +189,25 @@ void loop() {
  
 //ラダートリム処理
   //キー入力なし
-  if (r_up==Off && r_rst==Off && r_dn==Off) {
+  if (r_left==Off && r_rst==Off && r_right==Off) {
     rk_up = rk_rst = rk_dn = false;
   }
   //UP入力あり
-  else if (r_up==On && r_rst==Off && r_dn==Off && r_trm_cnt<trm_max && rk_up == false) { 
+  else if (r_left==On && r_rst==Off && r_right==Off && r_trm_cnt<trm_max && rk_up == false) { 
     r_mv += mv ;
     r_trm_cnt++;
     rk_up = true;
     delay(dly);
   }
   //DOWN入力あり
-  else if (r_up==Off && r_rst==Off && r_dn==On && r_trm_cnt>-trm_max && rk_dn == false) { 
+  else if (r_left==Off && r_rst==Off && r_right==On && r_trm_cnt>-trm_max && rk_dn == false) { 
     r_mv -=  mv;
     r_trm_cnt--;
     rk_dn = true;
     delay(dly);
   }
   //RESET入力あり
-  else if (r_up==Off && r_rst==On && r_dn==Off && rk_rst == false) { 
+  else if (r_left==Off && r_rst==On && r_right==Off && rk_rst == false) { 
     r_mv = 0;
     r_trm_cnt=0; //トリムキーリセット
     rk_rst = true;
