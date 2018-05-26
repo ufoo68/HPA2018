@@ -10,9 +10,9 @@
 #define rpn_rst 7
 #define rpn_right 8
 //エレベータキーピン宣言
-#define epn_up 19
+#define epn_up 17
 #define epn_rst 18
-#define epn_dn 17
+#define epn_dn 19
 //サーボピン宣言
 #define rpn_srv 9
 #define epn_srv 10
@@ -24,20 +24,20 @@
 
 //パラメータ
 //ラダー初期値
-const short r_ang_max = 626;   //アナログ上限値
-const short r_ang_min = 328;   //アナログ下限値
-const short r_ang_mdl = 470;   //アナログ中央値
+const short r_ang_max = 1023;   //アナログ上限値
+const short r_ang_min = 0;   //アナログ下限値
+const short r_ang_mdl = 512;   //アナログ中央値
 const short  r_ang_crange = 8;  //アナログ中央値収束範囲
-const boolean r_rvrs = true;     //パルス出力反転フラグ
+const boolean r_rvrs = false;     //パルス出力反転フラグ
 //エレベータ初期値
-const short e_ang_max = 607;   //アナログ上限値
-const short e_ang_min = 332;   //アナログ下限値
-const short e_ang_mdl = 482;   //アナログ中央値
+const short e_ang_max = 1023;   //アナログ上限値
+const short e_ang_min = 0;   //アナログ下限値
+const short e_ang_mdl = 512;   //アナログ中央値
 const short  e_ang_crange = 8;  //アナログ中央値収束範囲
 const boolean e_rvrs = false;     //パルス出力反転フラグ
 //ラダー、エレベータ共通初期値
-const short pulse_max = 2050;     //パルス変換上限値
-const short pulse_min = 950;      //パルス変換下限値
+const short pulse_max = 2000;     //パルス変換上限値
+const short pulse_min = 1000;      //パルス変換下限値
 const short angle_max = 2000;     //パルス出力上限値
 const short angle_min = 1000;     //パルス出力下限値
 const char trm_max = 6;           //トリム最大段数
@@ -45,7 +45,7 @@ const short mv = 40;              //トリム動作量
 const short midle = 1500;         //サーボニュートラル位置
 //このシステムの質に関わるパラメータ(あまり大きな値にしないで...)
 const short d_avg = 10;           //A/D変換値の平均をとる範囲 1 < d_avg
-const short dly = 100;           //トリム受付間隔(ms) チャタリングの防止
+const short dly = 200;           //トリム受付間隔(ms) チャタリングの防止
 const short dband = 0;            //俯瞰幅 < r_mv, e_mv
 //デバッグ用フラグ
 const boolean v_test = false; //サーボへの信号の電圧のドロップを確認する用
