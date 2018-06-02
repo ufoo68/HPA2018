@@ -32,3 +32,6 @@ r : ラダー
 ### 信号線
 黄 : r  
 緑 : e  
+
+### 基板配置
+![基板配置図](https://docs.google.com/drawings/d/e/2PACX-1vQ1sgteJVFo-8biVL6pwroS8nPYRfAhdPN9qbp7i--ZKk9LDnXRunqEiVy0HK8jNidJ4K8VbCYmiTqk/pub?w=960&h=720)
