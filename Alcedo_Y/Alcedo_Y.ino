@@ -1,6 +1,5 @@
 /*
 ラダー、エレベータ制御プログラム 2018
-最終修正日 2018 5/25
 */
 
 #include <Servo.h>
@@ -11,7 +10,7 @@
 #define rpn_right 8
 //エレベータキーピン宣言
 #define epn_up 17
-#define epn_rst 18
+#define epn_rst 18 
 #define epn_dn 19
 //サーボピン宣言
 #define rpn_srv 9
@@ -27,24 +26,24 @@
 const short r_ang_max = 1023;   //アナログ上限値
 const short r_ang_min = 0;   //アナログ下限値
 const short r_ang_mdl = 512;   //アナログ中央値
-const short  r_ang_crange = 8;  //アナログ中央値収束範囲
+const short  r_ang_crange = 0;  //アナログ中央値収束範囲
 const boolean r_rvrs = false;     //パルス出力反転フラグ
 //エレベータ初期値
-const short e_ang_max = 1023;   //アナログ上限値
+const short e_ang_max = 1011;   //アナログ上限値
 const short e_ang_min = 0;   //アナログ下限値
 const short e_ang_mdl = 512;   //アナログ中央値
-const short  e_ang_crange = 8;  //アナログ中央値収束範囲
+const short  e_ang_crange = 0;  //アナログ中央値収束範囲
 const boolean e_rvrs = false;     //パルス出力反転フラグ
 //ラダー、エレベータ共通初期値
-const short pulse_max = 2000;     //パルス変換上限値
-const short pulse_min = 1000;      //パルス変換下限値
-const short angle_max = 2000;     //パルス出力上限値
-const short angle_min = 1000;     //パルス出力下限値
+const short pulse_max = 2100;     //パルス変換上限値
+const short pulse_min = 900;      //パルス変換下限値
+const short angle_max = 2100;     //パルス出力上限値
+const short angle_min = 900;     //パルス出力下限値
 const char trm_max = 6;           //トリム最大段数
 const short mv = 40;              //トリム動作量
 const short midle = 1500;         //サーボニュートラル位置
 //このシステムの質に関わるパラメータ(あまり大きな値にしないで...)
-const short d_avg = 10;           //A/D変換値の平均をとる範囲 1 < d_avg
+const short d_avg = 50;           //A/D変換値の平均をとる範囲 1 < d_avg
 const short dly = 200;           //トリム受付間隔(ms) チャタリングの防止
 const short dband = 0;            //俯瞰幅 < r_mv, e_mv
 //デバッグ用フラグ
@@ -140,8 +139,17 @@ void loop() {
   if(v_test) r_value = r_ang_mdl;
   
   //入力ボリュームの出力パルス変換
-  if (r_value < r_ang_mdl - r_ang_crange || r_value > r_ang_mdl + r_ang_crange) {
-    afr_angle = map(r_value, r_ang_min , r_ang_max , pulse_min + r_mv , pulse_max + r_mv);
+  if (r_value < r_ang_mdl - r_ang_crange) {
+    afr_angle = map(r_value, r_ang_min, r_ang_max, pulse_min + r_mv, pulse_max + r_mv);
+    //出力パルスのふかん幅調整
+    if (afr_angle <= bfr_angle + dband && afr_angle >= bfr_angle - dband) r_angle = bfr_angle;
+    else {
+      r_angle = afr_angle;
+      bfr_angle = afr_angle;
+    }
+  }
+  else if (r_value > r_ang_mdl + r_ang_crange) {
+    afr_angle = map(r_value, r_ang_min, r_ang_max, pulse_min + r_mv, pulse_max + r_mv);
     //出力パルスのふかん幅調整
     if (afr_angle <= bfr_angle + dband && afr_angle >= bfr_angle - dband) r_angle = bfr_angle;
     else {
