@@ -31,7 +31,8 @@ float a = 0.8;
 
 // sd card
 const int chipSelect = 4;
-volatile const char *filename = "test.csv";
+char fileName[16];
+int fileNum = 0;
 int wrieInterval = 100;
 
 // ultra sonic
@@ -76,10 +77,27 @@ void setup() {
     Serial.println("Card failed, or not present");
     return;
   }
-  Serial.println("card initialized.");
-  File dataFile = SD.open(filename, FILE_WRITE);
+  else {
+    Serial.println("card initialized.");
+  }
+  String s;
+  while(1){
+    s = "LOG";
+    if (fileNum < 10) {
+      s += "00";
+    } else if(fileNum < 100) {
+      s += "0";
+    }
+    s += fileNum;
+    s += ".csv";
+    s.toCharArray(fileName, 16);
+    if(!SD.exists(fileName)) break;
+    fileNum++;
+  }
+  File dataFile = SD.open(fileName, FILE_WRITE);
   if (dataFile) {
-    dataFile.println("logging start");
+    dataFile.print("This file is No.");
+    dataFile.println(fileNum);
     dataFile.close();
   }
   else {
@@ -167,7 +185,7 @@ void writeSD() {
   dataString += String(degX);
   dataString += ",";
   dataString += String(Distance);
-  File dataFile = SD.open(filename, FILE_WRITE);
+  File dataFile = SD.open(fileName, FILE_WRITE);
   if (dataFile) {
     dataFile.println(dataString);
     dataFile.close();
