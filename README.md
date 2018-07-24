@@ -14,24 +14,24 @@
 ### LANケーブル left
 |線の色  |役割  |ピン番号  |  
 |---|---|---|
-|緑白 |r left  |6   |
-|緑 |neutral  |7  |
-|橙白 |r right  |8  |
+|橙白 |r left  |6   |
+|橙 |neutral  |7  |
+|緑白 |r right  |8  |
 |青 |e down  |19(A5)  |
 |青白 |e neutral  |18(A4)  |
-|橙 |e up  |17(A3)  |
+|緑 |e up  |17(A3)  |
 |茶白 |none  | none |
 |茶 |GND  |GND  |
 
 ### LANケーブル right
 |線の色  |役割  |ピン番号  |  
 |---|---|---|
-|緑白 |e servo  |15(A1)   |
-|緑 |r servo  |14(A0)  |
-|橙白 |none  |none  |
+|橙白 |e servo  |15(A1)   |
+|橙 |r servo  |14(A0)  |
+|緑白 |none  |none  |
 |青 |none  |none  |
 |青白 |Vcc  |5v  |
-|橙 |Vcc  |5v  |
+|緑 |Vcc  |5v  |
 |茶白 |GND  |GND  |
 |茶 |GND  |GND  |
 
