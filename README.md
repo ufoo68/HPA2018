@@ -1,7 +1,7 @@
 # 操舵関係
 ## ハードウェア構成
-- Arduino nano
-- LANコネクタモジュール
+- [Arduino nano](http://akizukidenshi.com/catalog/g/gM-09059/)
+- [LANコネクタモジュール](http://akizukidenshi.com/catalog/g/gK-05404/)
 - タクトスイッチ
 - サーボモータ
 - ジョイスティック
